@@ -1,7 +1,6 @@
 package Entities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CollectionOperator {
     ArrayList<Operator> markOperation;
@@ -18,7 +17,7 @@ public class CollectionOperator {
         markOperation.add(new Operator('>', 4));
     }
 
-    public ArrayList<Operator> getMarkOperation(){
+    public ArrayList<Operator> getMarkOperation() {
         return markOperation;
     }
 }

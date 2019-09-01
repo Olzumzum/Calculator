@@ -26,7 +26,11 @@ public class ConverterToPostfix {
         int weightStr = -1;
         iLinePost = 0;
 
+        if (!mathExpressionTest(expressionText))
+            return linePostfix = null;
+
         while (count < expressionText.length) {
+
 
             if (expressionText[count] != ' ') {
                 //если цифра - занести в строчку
@@ -84,6 +88,7 @@ public class ConverterToPostfix {
         }
 
         System.out.println(linePostfix);
+
         return linePostfix;
 
     }
@@ -154,6 +159,26 @@ public class ConverterToPostfix {
         if (stack.peek().getWeight() <= 1) {
             stack.pop();
         }
+    }
+
+    //проверка введеных значений
+    private boolean mathExpressionTest(char[] expression) {
+        boolean flag = true;
+        for (int i = 0; i < expression.length; i++) {
+            if (!Character.isDigit(expression[i])) {
+                for (int j = 0; j < collectionOperator.size(); j++) {
+                    if (expression[i] == collectionOperator.get(j).getNameOperator()) {
+                        flag = true;
+                        break;
+                    } else
+                        flag = false;
+                }
+            }
+            if (flag == false)
+                break;
+        }
+        return flag;
+
     }
 
 

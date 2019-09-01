@@ -1,9 +1,7 @@
 package interactors;
 
-import Entities.CollectionOperator;
-import Entities.Operator;
-
-import java.util.*;
+import java.util.List;
+import java.util.Stack;
 
 public class CalculationOfValue {
 
@@ -24,6 +22,9 @@ public class CalculationOfValue {
 
     public String countingNumbers() {
         List<String> s = new ConverterToPostfix().conversionPostfix(expressionText);
+        if (s == null)
+            return result = "Введите корректное значение";
+
         String d = "";
         List<Double> stackNumbers = new Stack<>();
         int count = 0;

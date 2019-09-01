@@ -40,7 +40,7 @@ public class PainterWindow {
         resultText = new JTextField(numberCharactersInputField);
         resultText.setBounds(xResult, yREsult, windowWidth, heightResult);
         resultText.setMargin(new Insets(marginEditField[0] + 20, marginEditField[1], marginEditField[2], marginEditField[3]));
-        collectionButton = new CollectionButtonCalculator(editText,resultText);
+        collectionButton = new CollectionButtonCalculator(editText, resultText);
         panel = collectionButton.create();
 
         panel.add(editText);

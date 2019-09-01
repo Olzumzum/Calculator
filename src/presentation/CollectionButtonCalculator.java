@@ -24,15 +24,14 @@ public class CollectionButtonCalculator {
 
     private static final String[] mark = {"+", "-", "*", "/", ".", "=", "(", ")", "<", ">", "C"};
     private static final String[] numbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-
-    private ArrayList<Integer> columns;
-    private ArrayList<Integer> lines;
     HashMap<String, JButton> buttonMapMark;
     JButton buttonOperation;
     JPanel panel;
     JTextArea textField;
     String resultText;
     JTextField resultTextField;
+    private ArrayList<Integer> columns;
+    private ArrayList<Integer> lines;
 
     public CollectionButtonCalculator(JTextArea text, JTextField textres) {
         resultTextField = textres;
@@ -120,6 +119,7 @@ public class CollectionButtonCalculator {
                     CalculationOfValue calculationOfValue = new CalculationOfValue();
                     calculationOfValue.giveExpression(textField.getText());
                     resultText = calculationOfValue.getResult();
+                    resultTextField.setText("");
                     resultTextField.setText(resultText);
                     textField.setText("");
 
@@ -131,10 +131,6 @@ public class CollectionButtonCalculator {
                     textField.setText(textField.getText() + singButton);
             }
         });
-    }
-
-    public String returnResult() {
-        return resultText;
     }
 
 }
