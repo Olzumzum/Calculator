@@ -1,5 +1,9 @@
 package interactors;
 
+/*
+ Описывает как должна выполняться операция
+ */
+
 public class MathOperations {
 
     //выбор оператора

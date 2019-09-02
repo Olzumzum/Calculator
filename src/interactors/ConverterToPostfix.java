@@ -7,23 +7,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class ConverterToPostfix {
+class ConverterToPostfix {
     private List<String> linePostfix;
     private int iLinePost;
     private Operator operatorInLine;
     private ArrayList<Operator> collectionOperator;
     private Stack<Operator> stack;
 
-    public ConverterToPostfix() {
+    ConverterToPostfix() {
         collectionOperator = new CollectionOperator().getMarkOperation();
         stack = new Stack<>();
     }
 
-    public List<String> conversionPostfix(char[] expressionText) {
+    List<String> conversionPostfix(char[] expressionText) {
         int count = 0;
         String numbersFromExpr = "";        //строка для записи чисел
         linePostfix = new ArrayList<>();
-        int weightStr = -1;
         iLinePost = 0;
 
         if (!mathExpressionTest(expressionText))
@@ -54,16 +53,16 @@ public class ConverterToPostfix {
 
                     if (!numbersFromExpr.equals("-")) {
                         //найти введенный оператор среди существующих в калькуляторе
-                        for (int i = 0; i < collectionOperator.size(); i++) {
+                        for (Operator operator : collectionOperator) {
                             //если оператор используется в калькуляторе
-                            if (collectionOperator.get(i).getNameOperator() == expressionText[count]) {
+                            if (operator.getNameOperator() == expressionText[count]) {
                                 //присвоить вес
-                                operatorInLine = collectionOperator.get(i);
+                                operatorInLine = operator;
                             }
                         }
 
                         //выбор действий относительно оператора
-                        destributionWeight(operatorInLine);
+                        distributionWeight(operatorInLine);
                     }
                 }
 
@@ -75,7 +74,6 @@ public class ConverterToPostfix {
             }
 
             count++;
-            weightStr = -1;
         }
 
 
@@ -132,7 +130,7 @@ public class ConverterToPostfix {
         }
     }
 
-    private void destributionWeight(Operator operatorInLine) {
+    private void distributionWeight(Operator operatorInLine) {
         // если скобки
         if (operatorInLine.getWeight() == 0) {
             Operator op = new Operator(operatorInLine.getNameOperator(), operatorInLine.getWeight());
@@ -162,19 +160,20 @@ public class ConverterToPostfix {
     }
 
     //проверка введеных значений
+    //если введена буква - вернуть ошибку
     private boolean mathExpressionTest(char[] expression) {
         boolean flag = true;
-        for (int i = 0; i < expression.length; i++) {
-            if (!Character.isDigit(expression[i])) {
-                for (int j = 0; j < collectionOperator.size(); j++) {
-                    if (expression[i] == collectionOperator.get(j).getNameOperator()) {
+        for (char c : expression) {
+            if (!Character.isDigit(c)) {
+                for (Operator operator : collectionOperator) {
+                    if (c == operator.getNameOperator()) {
                         flag = true;
                         break;
                     } else
                         flag = false;
                 }
             }
-            if (flag == false)
+            if (!flag)
                 break;
         }
         return flag;

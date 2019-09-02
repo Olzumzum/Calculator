@@ -20,10 +20,10 @@ public class CalculationOfValue {
         return result;
     }
 
-    public String countingNumbers() {
+    private void countingNumbers() {
         List<String> s = new ConverterToPostfix().conversionPostfix(expressionText);
         if (s == null)
-            return result = "Введите корректное значение";
+            result = "Введите корректное значение";
 
         String d = "";
         List<Double> stackNumbers = new Stack<>();
@@ -60,11 +60,11 @@ public class CalculationOfValue {
 
         result = String.valueOf(stackNumbers.get(0));
         System.out.println(result);
-        return result;
+      //  return result;
     }
 
 
-    private List<Double> searchOperator(int i, char str, List<Double> stekNumbers) {
+    private void searchOperator(int i, char str, List<Double> stekNumbers) {
         MathOperations mathOperations = new MathOperations();
         int j = i - 1;
         double newValue = mathOperations.selectionOperator(str, stekNumbers.get(j - 1), stekNumbers.get(j));
@@ -72,7 +72,7 @@ public class CalculationOfValue {
         stekNumbers.remove(j);
         i--;
         iStek = i;
-        return stekNumbers;
+        //return stekNumbers;
     }
 }
 

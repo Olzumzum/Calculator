@@ -10,11 +10,12 @@ import java.util.HashMap;
 
 /*
 Идея данного класса упростить работу с калькулятором в случае добавления знаков операций
-(чтобы не требовалось рассчитывать координаты для новых появившихся кнопочек
+(чтобы не требовалось рассчитывать координаты для новых появившихся кнопочек)
+Так же здесь прописывается реакция на нажатие кнопок (ввод в поле символа или реакция на нажатие кнопки)
  */
 
 
-public class CollectionButtonCalculator {
+class CollectionButtonCalculator {
     private static final int windowWidth = 400;
     private static final int windowHeight = 700;
     private static final int sizeButton = 50;
@@ -24,25 +25,23 @@ public class CollectionButtonCalculator {
 
     private static final String[] mark = {"+", "-", "*", "/", ".", "=", "(", ")", "<", ">", "C"};
     private static final String[] numbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-    HashMap<String, JButton> buttonMapMark;
-    JButton buttonOperation;
-    JPanel panel;
-    JTextArea textField;
-    String resultText;
-    JTextField resultTextField;
+    private JTextArea textField;
+    private String resultText;
+    private JTextField resultTextField;
     private ArrayList<Integer> columns;
     private ArrayList<Integer> lines;
 
-    public CollectionButtonCalculator(JTextArea text, JTextField textres) {
+    CollectionButtonCalculator(JTextArea text, JTextField textres) {
         resultTextField = textres;
         textField = text;
     }
 
     //создание панели кнопок
-    public JPanel create() {
+    JPanel create() {
+        HashMap<String, JButton> buttonMapMark = new HashMap<>();
+        JPanel panel = new JPanel();
+
         getCoordinates();
-        buttonMapMark = new HashMap<>();
-        panel = new JPanel();
         panel.setLayout(null);
         int line = 0;
 
@@ -55,6 +54,7 @@ public class CollectionButtonCalculator {
             int column = 0;
             while (column < columns.size()) {
                 //цикл задания имен и создния кнопок
+                JButton buttonOperation;
                 if (k < numbers.length) {
                     if (column == sizeHorizontal - 1) {
                         buttonOperation = new JButton(mark[l]);
@@ -111,25 +111,22 @@ public class CollectionButtonCalculator {
     }
 
     //ввод символов в текстовое поле
-    public void clicked(JButton button, String singButton) {
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (singButton == "=") {
-                    CalculationOfValue calculationOfValue = new CalculationOfValue();
-                    calculationOfValue.giveExpression(textField.getText());
-                    resultText = calculationOfValue.getResult();
-                    resultTextField.setText("");
-                    resultTextField.setText(resultText);
-                    textField.setText("");
+    private void clicked(JButton button, String singButton) {
+        button.addActionListener(e -> {
+            if (singButton.equals("=")) {
+                CalculationOfValue calculationOfValue = new CalculationOfValue();
+                calculationOfValue.giveExpression(textField.getText());
+                resultText = calculationOfValue.getResult();
+                resultTextField.setText("");
+                resultTextField.setText(resultText);
+                textField.setText("");
 
-                } else if (singButton == "C") {
-                    resultTextField.setText("");
-                    textField.setText("");
+            } else if (singButton.equals("C")) {
+                resultTextField.setText("");
+                textField.setText("");
 
-                } else
-                    textField.setText(textField.getText() + singButton);
-            }
+            } else
+                textField.setText(textField.getText() + singButton);
         });
     }
 
